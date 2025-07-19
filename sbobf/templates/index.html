@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=devive-width,initial-scale=1.0" />
+    <meta name="keywords" content="maoundis, Ikbal, bash, obfuscator, xiuz, code">
+
+    <meta property="og:image" content="https://i.ibb.co/GF69Bpn/20200818-231702.jpg">
+    <meta property="og:title" content="simple bash obfuscator (sbobf)">
+    <meta property="og:description" content="simple bash obfuscator created by maoundis">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.56.0/codemirror.min.css" integrity="sha512-/BlxZbYLtYGExexketXsTi47eHp+r2kTeq2OHecQPZlfbc7WFXVrwbVW9HOYjI6c9Ti+P60ASmVLxittZ0EBGw==" crossorigin="anonymous" />
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.56.0/theme/dracula.min.css" integrity="sha512-gFMl3u9d0xt3WR8ZeW05MWm3yZ+ZfgsBVXLSOiFz2xeVrZ8Neg0+V1kkRIo9LikyA/T9HuS91kDfc2XWse0K0A==" crossorigin="anonymous" />
+   
+    <style>
+      body {
+          background-color: #3d3b67;
+      }
+    
+      .container {
+        display: inline;
+        padding: 20px;
+      
+      }
+      .btn { 
+        border-radius: 3px;
+        border: none;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        font-size: 15px;
+        font-weight: bold;
+      }
+      
+      .btn-primary {
+        background-image: linear-gradient(to right, #5559fe, #5559fe, #f54efb);
+        color: #ffffff;
+      }
+      
+      .btn-losa {
+        background-color: #d6d7f671;
+        color: #ecf1f3;
+      }
+      
+      .btn-block {
+        display: block;
+        width: 100%;
+        cursor: pointer;
+        font-size: 15px;
+        
+      }
+      
+      .btn: hover {
+        outline-color: #000355;
+      }
+      
+      .disabled {
+        background-color: #fdfdfd46;
+        color: #ecececc9;
+        
+      }
+    </style>
+    <title>simple bash obfuscator</title>
+  
+  
+  </head>
+  <body>
+    <div class="container">
+      <button class="btn btn-block btn-losa">open file</button>
+      <input type="file" style="display:none;">
+      <textarea rows="12"></textarea>
+      <button class="btn btn-primary">obfuscate</button>
+
+    </div>
+    
+  <!-- <script src="obf.js"></script> -->
+  <script src="{{ url_for('static', filename='obf.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.56.0/codemirror.min.js" integrity="sha512-H5RyE1jRbGn8d0dsSstZi0SSs23X6Hkkf5hLneEIFyCfP/cBwJ/jFJESBuFBiUyzbGZGa06tnrvw1SboRKdwcA==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.10.0/mode/shell/shell.min.js" integrity="sha512-+LRs0SsO0gaMhTOJyW3mCiW93Jz9YO2Iu90YodKk+FQ5FWMeSM+bCpV2YI0CSxoBz3yS0OT1kx96u2MZFSPHsQ==" crossorigin="anonymous"></script>
+ 
+  <script>
+    var cm = CodeMirror.fromTextArea(document.querySelector("textarea"), {
+        mode: "shell",
+        lineNumbers: true,
+        theme: "dracula",
+        inputStyle: "textarea",
+        autoIndent: true
+    }),
+    style = cm.getWrapperElement().style;
+    style['font-size']='15px';
+    style['font-family']="'Fira Code', monospace";
+    cm.refresh();
+ 
+  </script>
+  <script>
+  
+    
+    
+    var btn = document.getElementsByTagName("button");
+   
+    btn[0].addEventListener("click", x => document.querySelector("input[type=file]").click());
+    btn[1].addEventListener("click", async (e) => {
+      
+      e.target.disabled=true;
+      e.target.classList.add("disabled");
+      
+      var r=escape(await obf(cm.getValue()));
+      
+      e.target.classList.remove("disabled");
+      
+      e.target.disabled=false;
+      
+      
+      var a=(document.querySelector("a") || document.createElement("a"));
+      
+      a.download=Math.random()+"_obf.sh"
+      a.href="data:application/octet-stream,"+r;
+      if(document.querySelector("a") !== null) return;
+      a.appendChild(document.createTextNode("download"));
+    
+      a.style="color:white;padding-left:20px;font-family:'Fira Code', monospace";
+      
+      a.addEventListener("click", ()=>document.querySelector("a").remove());
+      
+      document.querySelector("div.container").appendChild(a);
+      
+    });
+    
+  
+    
+    document.querySelector("input[type=file]").addEventListener("change", (e) => {
+      const reader = new FileReader();
+      reader.addEventListener('load', (event) => {
+          cm.setValue(event.target.result);
+          cm.refresh();
+      });
+      reader.readAsText(e.target.files[0]);
+      
+    });
+    
+  </script>
+  </body>
+</html>
